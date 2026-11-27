@@ -23,3 +23,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm install
       - run: npm run test
+
+# Superseded PR validation must not hold runner capacity.
+concurrency:
+  group: pr-ci-test.yml-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
